@@ -1,6 +1,4 @@
 ##This folder contains `configuration` file
 
-- `helper.php` file contains the _names_ of Indian states and their _codes_ 
-- `router_handler.php` file contains the _names_ of Indian states and their _codes_ 
-- `routes.php` file contains the _names_ of Indian states and their _codes_ 
-- `session.php` file contains the _names_ of Indian states and their _codes_ 
+- `config.php.example` just rename the `config.php.example` to `config.php` and add necessary parameters 
+ 
