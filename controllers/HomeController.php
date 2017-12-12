@@ -98,10 +98,10 @@ class HomeController {
 
 		$this->streetName = isset( $_POST['street_name'] ) ? $_POST['street_name'] : '';
 		$this->cityName   = isset( $_POST['city_name'] ) ? $_POST['city_name'] : '';
-		$this->zipCode    = isset( $_POST['zip_code'] ) ? $_POST['zip_code'] : '';
+		$this->zipCode    = (int)isset( $_POST['zip_code'] ) ? $_POST['zip_code'] : '';
 		$this->state      = isset( $_POST['state'] ) ? $_POST['state'] : '';
 
-		$this->phone      = isset( $_POST['phone'] ) ? $_POST['phone'] : '';
+		$this->phone      = (int)isset( $_POST['phone'] ) ? $_POST['phone'] : '';
 		$this->email      = isset( $_POST['email'] ) ? $_POST['email'] : '';
 		$this->skillCat1  = isset( $_POST['skill'][1][1] ) ? $_POST['skill'][1][1] : '';
 		$this->skillCat2  = isset( $_POST['skill'][2][2] ) ? $_POST['skill'][2][2] : '';

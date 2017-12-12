@@ -95,6 +95,23 @@ class ApiController {
 	 */
 	private $skillCat4Rating;
 
+	/**
+	 * @var
+	 */
+	private $skillCat1Eval;
+	/**
+	 * @var
+	 */
+	private $skillCat2Eval;
+	/**
+	 * @var
+	 */
+	private $skillCat3Eval;
+	/**
+	 * @var
+	 */
+	private $skillCat4Eval;
+
 
 	/**
 	 * @var array
@@ -181,21 +198,25 @@ class ApiController {
 		$this->streetName = trim( isset( $_POST['street_name'] ) ? $_POST['street_name'] : '' );
 		$this->firstName  = trim( isset( $_POST['first_name'] ) ? $_POST['first_name'] : '' );
 		$this->cityName   = trim( isset( $_POST['city_name'] ) ? $_POST['city_name'] : '' );
-		$this->zipCode    = trim( isset( $_POST['zip_code'] ) ? $_POST['zip_code'] : '' );
+		$this->zipCode    = (int) trim( isset( $_POST['zip_code'] ) ? $_POST['zip_code'] : '' );
 		$this->state      = trim( isset( $_POST['state'] ) ? $_POST['state'] : '' );
-		$this->phone      = trim( isset( $_POST['phone'] ) ? $_POST['phone'] : '' );
+		$this->phone      = (int) trim( isset( $_POST['phone'] ) ? $_POST['phone'] : '' );
 		$this->email      = trim( isset( $_POST['email'] ) ? $_POST['email'] : '' );
 
 		$this->skillCat1       = trim( isset( $_POST['skill_1'] ) ? $_POST['skill_1'] : '' );
+		$this->skillCat1Eval   = trim( isset( $_POST['skill_1_eval'] ) ? $_POST['skill_1_eval'] : '' );
 		$this->skillCat1Rating = trim( isset( $_POST['skill_1_rating'] ) ? $_POST['skill_1_rating'] : '' );
 
 		$this->skillCat2       = trim( isset( $_POST['skill_2'] ) ? $_POST['skill_2'] : '' );
+		$this->skillCat2Eval   = trim( isset( $_POST['skill_2_eval'] ) ? $_POST['skill_2_eval'] : '' );
 		$this->skillCat2Rating = trim( isset( $_POST['skill_2_rating'] ) ? $_POST['skill_2_rating'] : '' );
 
 		$this->skillCat3       = trim( isset( $_POST['skill_3'] ) ? $_POST['skill_3'] : '' );
+		$this->skillCat3Eval   = trim( isset( $_POST['skill_3_eval'] ) ? $_POST['skill_3_eval'] : '' );
 		$this->skillCat3Rating = trim( isset( $_POST['skill_3_rating'] ) ? $_POST['skill_3_rating'] : '' );
 
 		$this->skillCat4       = trim( isset( $_POST['skill_4'] ) ? $_POST['skill_4'] : '' );
+		$this->skillCat4Eval   = trim( isset( $_POST['skill_4_eval'] ) ? $_POST['skill_4_eval'] : '' );
 		$this->skillCat4Rating = trim( isset( $_POST['skill_4'] ) ? $_POST['skill_4_rating'] : '' );
 
 		// first name
@@ -232,8 +253,8 @@ class ApiController {
 			return $this->responseJson( $response );
 		}
 
-		if ( strlen( $this->streetName ) > 50 ) {
-			$response = $this->logError( 'Street Name is too long, max limit is 50' );
+		if ( strlen( $this->streetName ) > 255 ) {
+			$response = $this->logError( 'Street Name is too long, max limit is 255' );
 
 			return $this->responseJson( $response );
 
@@ -265,6 +286,11 @@ class ApiController {
 
 			return $this->responseJson( $response );
 		}
+		if ( ! is_int( $this->zipCode ) ) {
+			$response = $this->logError( 'Zip code must be numeric' );
+
+			return $this->responseJson( $response );
+		}
 
 
 		//State
@@ -293,11 +319,17 @@ class ApiController {
 
 			return $this->responseJson( $response );
 		}
+		if ( ! is_numeric( $this->phone ) ) {
+
+			$response = $this->logError( 'Phone number must be numeric' );
+
+			return $this->responseJson( $response );
+		}
 
 
 		//email
 		if ( $this->email === '' ) {
-			$response = $this->logError( 'Email be empty' );
+			$response = $this->logError( 'Email cannot be empty' );
 
 			return $this->responseJson( $response );
 		}
@@ -396,27 +428,94 @@ class ApiController {
 		}
 
 
+		//cat 1,2,3,4 eval
+
+		if ( $this->skillCat1Eval == '' && $this->skillCat2Eval == '' && $this->skillCat3Eval == '' && $this->skillCat4Eval == '' ) {
+			$response = $this->logError( 'Please evaluate at least one skill category' );
+
+			return $this->responseJson( $response );
+		} else {
+			if ( $this->skillCat1Eval > 10 && $this->skillCat1Eval < 0 ) {
+				$response = $this->logError( 'Skill category evaluation must be between 0 to 10' );
+
+				return $this->responseJson( $response );
+			} elseif ( $this->skillCat2Eval > 10 && $this->skillCat2Eval < 0 ) {
+				$response = $this->logError( 'Skill category evaluation must be between 0 to 10' );
+
+				return $this->responseJson( $response );
+			} elseif ( $this->skillCat3Eval > 10 && $this->skillCat3Eval < 0 ) {
+				$response = $this->logError( 'Skill category evaluation must be between 0 to 10' );
+
+				return $this->responseJson( $response );
+			} elseif ( $this->skillCat4Eval > 10 && $this->skillCat4Eval < 0 ) {
+				$response = $this->logError( 'Skill category evaluation must be between 0 to 10' );
+
+				return $this->responseJson( $response );
+			}
+		}
+
+
 		$date = date( 'Y-m-d h:i:s' );
 
-		$result = DB::query(
+		$result = DB::insert(
 			'INSERT INTO  users (
 first_name, last_name,
  street, city, zip, state,
   phone, email,
-  skill_category_1,skill_category_1_rating,
-  skill_category_2,skill_category_2_rating,
-  skill_category_3,skill_category_3_rating,
-  skill_category_4,skill_category_4_rating,
   created_at)
 VALUES (\''
 			. $this->firstName . '\',\'' . $this->lastName
 			. '\',\'' . $this->streetName . '\',\'' . $this->cityName . '\',\'' . $this->zipCode . '\',\'' . $this->state
 			. '\',\'' . $this->phone . '\',\'' . $this->email
-			. '\',\'' . $this->skillCat1 . '\',\'' . $this->skillCat1Rating
-			. '\',\'' . $this->skillCat2 . '\',\'' . $this->skillCat2Rating
-			. '\',\'' . $this->skillCat3 . '\',\'' . $this->skillCat3Rating
-			. '\',\'' . $this->skillCat4 . '\',\'' . $this->skillCat4Rating
 			. '\',\'' . $date . '\')' );
+
+
+		//get user id
+		$userId = DB::getLastInsertedId();
+
+
+		//insert  into skill categories table
+		$skill_category_insert_1    = DB::query( 'INSERT INTO skill_categories (
+                                      sc_name, user_id, sc_evaluation) 
+                                 VALUES (\'Scripting languages\',\'' . $userId . '\',\'' . ( $this->skillCat1Eval ? $this->skillCat1Eval : 0 ) . '\')' );
+		$skill_category_insert_1_id = DB::getLastInsertedId();
+		$skill_category_insert_2    = DB::query( 'INSERT INTO skill_categories (
+                                      sc_name, user_id, sc_evaluation) 
+                                 VALUES (\'Other languages\',\'' . $userId . '\',\'' . ( $this->skillCat2Eval ? $this->skillCat2Eval : 0 ) . '\')' );
+		$skill_category_insert_2_id = DB::getLastInsertedId();
+		$skill_category_insert_3    = DB::query( 'INSERT INTO skill_categories (
+                                      sc_name, user_id, sc_evaluation) 
+                                 VALUES (\'Databases\',\'' . $userId . '\',\'' . ( $this->skillCat3Eval ? $this->skillCat3Eval : 0 ) . '\')' );
+		$skill_category_insert_3_id = DB::getLastInsertedId();
+		$skill_category_insert_4    = DB::query( 'INSERT INTO skill_categories (
+                                      sc_name, user_id, sc_evaluation) 
+                                 VALUES (\'Personal skills\',\'' . $userId . '\',\'' . ( $this->skillCat4Eval ? $this->skillCat4Eval : 0 ) . '\')' );
+		$skill_category_insert_4_id = DB::getLastInsertedId();
+
+
+		//get codebook skills data
+		$skill_1 = DB::select( 'SELECT * FROM codebook_for_skills WHERE id=' . $this->skillCat1 );
+		$skill_2 = DB::select( 'SELECT * FROM codebook_for_skills WHERE id=' . $this->skillCat2 );
+		$skill_3 = DB::select( 'SELECT * FROM codebook_for_skills WHERE id=' . $this->skillCat3 );
+		$skill_4 = DB::select( 'SELECT * FROM codebook_for_skills WHERE id=' . $this->skillCat4 );
+
+
+		// insert into skills table
+		$skill_insert_1 = DB::query( 'INSERT INTO skills (
+                                      skill_name, skill_rating, skill_category_id, user_id) 
+                                 VALUES (\'' . $skill_1[0]['skill'] . '\',\'' . $this->skillCat1Rating . '\',\'' . $skill_category_insert_1_id . '\',\'' . $userId . '\')' );
+
+		$skill_insert_2 = DB::query( 'INSERT INTO skills (
+                                      skill_name, skill_rating, skill_category_id, user_id) 
+                                 VALUES (\'' . $skill_2[0]['skill'] . '\',\'' . $this->skillCat2Rating . '\',\'' . $skill_category_insert_2_id . '\',\'' . $userId . '\')' );
+
+		$skill_insert_3 = DB::query( 'INSERT INTO skills (
+                                      skill_name, skill_rating, skill_category_id, user_id) 
+                                 VALUES (\'' . $skill_3[0]['skill'] . '\',\'' . $this->skillCat3Rating . '\',\'' . $skill_category_insert_3_id . '\',\'' . $userId . '\')' );
+
+		$skill_insert_4 = DB::query( 'INSERT INTO skills (
+                                      skill_name, skill_rating, skill_category_id, user_id) 
+                                 VALUES (\'' . $skill_4[0]['skill'] . '\',\'' . $this->skillCat4Rating . '\',\'' . $skill_category_insert_4_id . '\',\'' . $userId . '\')' );
 
 
 		$to      = $this->email;
@@ -428,10 +527,16 @@ VALUES (\''
 		           'MIME-Version: 1.0' . "\r\n" .
 		           'X-Mailer: PHP/' . PHP_VERSION;
 
-		mail( $to, $this->email, $subject, $message, $headers );
+		try {
+			mail( $to, $this->email, $subject, $message, $headers );
+		} catch ( Exception $exception ) {
+
+		}
+
 
 		$response['message'] = 'Saved successfully!';
 		$response['type']    = 'success';
+
 		return $this->responseJson( $response );
 
 

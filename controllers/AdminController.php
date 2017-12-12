@@ -110,24 +110,46 @@ class AdminController {
 				$user_id = $_POST['user_id'];
 				$result  = DB::query( 'SELECT * FROM users WHERE users.id=' . $user_id );
 
+
 				foreach ( $result as $key => $item ) {
-					$skill_1                                 = DB::query( 'SELECT skill FROM  codebook_for_skills WHERE skill_category_id=' . $item['skill_category_1'] );
-					$result[ $key ]['skill_category_1_name'] = $skill_1[0]['skill'];
 
-					$skill_2                                 = DB::query( 'SELECT skill FROM  codebook_for_skills WHERE id=' . $item['skill_category_2'] );
-					$result[ $key ]['skill_category_2_name'] = $skill_2[0]['skill'];
+					$skills = DB::query( 'SELECT skill_name FROM  skills WHERE user_id=' . (int) $item['id'] );
+					foreach ( $skills as $skill_key => $skill ) {
+						$result[ $key ][ 'skill_' . ++ $skill_key . '_name' ] = $skill['skill_name'];
+					}
 
-					$skill_3                                 = DB::query( 'SELECT skill FROM  codebook_for_skills WHERE id=' . $item['skill_category_3'] );
-					$result[ $key ]['skill_category_3_name'] = $skill_3[0]['skill'];
 
-					$skill_4                                 = DB::query( 'SELECT skill FROM  codebook_for_skills WHERE id=' . $item['skill_category_4'] );
-					$result[ $key ]['skill_category_4_name'] = $skill_4[0]['skill'];
+					$skill_categories = DB::query( 'SELECT sc_name,sc_evaluation FROM  skill_categories WHERE user_id=' . $item['id'] );
+					foreach ( $skill_categories as $sc_key => $skillCategory ) {
+						$k = $sc_key;
+						++ $k;
+						++ $sc_key;
+						$result[ $key ][ 'skill_category_' . $k . '_name' ]            = $skillCategory['sc_name'];
+						$result[ $key ][ 'skill_category_' . $sc_key . '_evaluation' ] = $skillCategory['sc_evaluation'];
+
+					}
 				}
 
 				view( 'admin.userDetail', $result );
 			} else {
 				header( 'Location:' . Config::get( 'app.APP_URL' ) . Config::get( 'app.APP_EXTRA_URL' ) . 'admin' );
 			}
+		} else {
+			flash( 'warning', 'You are not authorized to see this', 'warning' );
+			header( 'Location:' . Config::get( 'app.APP_URL' ) . Config::get( 'app.APP_EXTRA_URL' ) . 'admin' );
+		}
+	}
+
+
+	public function getMapAllUsers() {
+
+		if ( isset( $_SESSION['user_name'] ) && $_SESSION['user_name'] == Config::get( 'app.ADMIN_USER_NAME' ) && isset( $_SESSION['password'] ) && $_SESSION['password'] == Config::get( 'app.ADMIN_PASSWORD' ) ) {
+			$allUsers = DB::query( 'SELECT * FROM users' );
+			foreach ( $allUsers as $key => $user ) {
+				$allUsers[ $key ]['skills']         = DB::query( 'SELECT * FROM skills WHERE user_id=' . $user['id'] );
+				$allUsers[ $key ]['skill_category'] = DB::query( 'SELECT * FROM skill_categories WHERE user_id=' . $user['id'] );
+			}
+			view( 'adminMapAllUsers', $allUsers );
 		} else {
 			flash( 'warning', 'You are not authorized to see this', 'warning' );
 			header( 'Location:' . Config::get( 'app.APP_URL' ) . Config::get( 'app.APP_EXTRA_URL' ) . 'admin' );
