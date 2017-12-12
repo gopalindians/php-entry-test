@@ -26,4 +26,5 @@ $routePaths = [
 	'/admin/dashboard'  => 'AdminController@getDash',
 	'/adminLogout'      => 'AdminController@logout',
 	'/userDetail'       => 'AdminController@postUserDetail',
+	'/allUsers'         => 'AdminController@getMapAllUsers',
 ];
