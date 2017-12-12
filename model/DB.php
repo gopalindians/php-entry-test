@@ -29,7 +29,9 @@ class DB {
 		try {
 			self::$pdo = new PDO( 'mysql:host=' . Config::get( 'db.DB_HOST' ) . ';dbname=' . Config::get( 'db.DB_NAME' ) . ';', Config::get( 'db.DB_USERNAME' ), Config::get( 'db.DB_PASSWORD' ) );
 		} catch ( PDOException $PDOException ) {
-			throw  $PDOException;
+			echo $PDOException->getMessage().'</br>';
+			echo 'Please see config.php file ';
+			exit(1);
 		}
 	}
 
