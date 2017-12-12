@@ -27,7 +27,7 @@
                     <td><?= $item['state'] ?></td>
                     <td><?= $item['phone'] ?></td>
                     <td><?= $item['email'] ?></td>
-                    <td><?= $item['skill_category_1_rating'] + $item['skill_category_2_rating'] + $item['skill_category_3_rating'] + $item['skill_category_4_rating'] ?></td>
+                    <td><?= $item['skill_category_1_evaluation'] + $item['skill_category_2_evaluation'] + $item['skill_category_3_evaluation'] + $item['skill_category_4_evaluation'] ?></td>
                 </tr>
 			<?php endforeach; ?>
             </tbody>
@@ -54,9 +54,6 @@
     var contentString;
 
     function initMap() {
-
-        /*var latitude = document.getElementById('hidden_lat').value;
-        var longitude = document.getElementById('hidden_long').value;*/
 
         var chandigarh = {lat: 30.7333, lng: 76.7794};
         map = new google.maps.Map(document.getElementById('map'), {
@@ -140,7 +137,7 @@
                         '<td><?= $result[0]['first_name']?></td>' +
                         '<td><?= $result[0]['last_name']?></td>' +
                         '<td><?= $result[0]['street'] . ', ' . $result[0]['city'] . ', ' . $result[0]['state']?></td>' +
-                        '<td><?= $result[0]['skill_category_1_name'] . ',  ' . $result[0]['skill_category_2_name'] . ', ' . $result[0]['skill_category_3_name'] . ', ' . $result[0]['skill_category_4_name']?></td>' +
+                        '<td><?= $result[0]['skill_1_name'] . ',  ' . $result[0]['skill_2_name'] . ', ' . $result[0]['skill_3_name'] . ', ' . $result[0]['skill_4_name']?></td>' +
                         '</tr>' +
                         '</tbody>' +
                         '</table></div>';

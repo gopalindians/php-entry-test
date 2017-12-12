@@ -1,6 +1,9 @@
 <?php defined( 'APP_VERSION' ) or die(); ?>
 <div>
+    <a target="_blank" href="<?= Config::get( 'app.APP_URL' ) . Config::get( 'app.APP_EXTRA_URL' ).'allUsers' ?>">See all users
+        on map</a>
     <div class="row justify-content-md-center" style="display: none" id="user-table">
+
         <table class="table table-striped table-dark">
             <thead>
             <tr>
