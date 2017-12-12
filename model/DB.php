@@ -49,6 +49,16 @@ class DB {
 			throw $PDOException;
 		}
 	}
+
+
+	/**
+	 * return the id of last inserted record
+	 *
+	 * @return string
+	 */
+	public static function getLastInsertedId() {
+		return self::$pdo->lastInsertId();
+	}
 }
 
 # initialize the DB class
