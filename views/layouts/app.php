@@ -53,8 +53,15 @@
 
 
     </style>
+
+    <!--For Fun-->
+    <script>
+        console.log('%c You are awesome | आप अच्छे हैं! ', 'font-size:30px; background: #222; color: #bada55');
+        console.log('%c If you are here you probably love web, head over to http://github.com/gopalindians to collaborate with me', 'font-size:12px; background: #222; color: #bada55');
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
-<body>
+<body style="font-family: 'Montserrat', sans-serif;">
 
 <div class="container">
     <!-- Image and text -->

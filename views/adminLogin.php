@@ -2,7 +2,6 @@
 <div class="row justify-content-md-center">
     <div class="col-md-6">
 
-		<?php flash( 'warning' ) ?>
 
 		<?php if ( isset( $result ) ): ?>
 			<?php foreach ( $result as $key => $item ): ?>
