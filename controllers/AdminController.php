@@ -43,7 +43,7 @@ class AdminController {
 
 
 	/**
-	 * Method to handle the login data
+	 * Method to handle the login data of admin
 	 */
 	public function postLogin() {
 		$this->userName = isset( $_POST['user_name'] ) ? $_POST['user_name'] : '';
@@ -141,18 +141,21 @@ class AdminController {
 	}
 
 
+    /**
+     * Show all users on Map
+     */
 	public function getMapAllUsers() {
 
-		if ( isset( $_SESSION['user_name'] ) && $_SESSION['user_name'] == Config::get( 'app.ADMIN_USER_NAME' ) && isset( $_SESSION['password'] ) && $_SESSION['password'] == Config::get( 'app.ADMIN_PASSWORD' ) ) {
-			$allUsers = DB::query( 'SELECT * FROM users' );
-			foreach ( $allUsers as $key => $user ) {
-				$allUsers[ $key ]['skills']         = DB::query( 'SELECT * FROM skills WHERE user_id=' . $user['id'] );
-				$allUsers[ $key ]['skill_category'] = DB::query( 'SELECT * FROM skill_categories WHERE user_id=' . $user['id'] );
-			}
-			view( 'adminMapAllUsers', $allUsers );
-		} else {
-			flash( 'warning', 'You are not authorized to see this', 'warning' );
-			header( 'Location:' . Config::get( 'app.APP_URL' ) . Config::get( 'app.APP_EXTRA_URL' ) . 'admin' );
-		}
+            if (isset($_SESSION['user_name']) && $_SESSION['user_name'] == Config::get('app.ADMIN_USER_NAME') && isset($_SESSION['password']) && $_SESSION['password'] == Config::get('app.ADMIN_PASSWORD')) {
+                $allUsers = DB::query('SELECT * FROM users');
+                foreach ($allUsers as $key => $user) {
+                    $allUsers[$key]['skills'] = DB::query('SELECT * FROM skills WHERE user_id=' . $user['id']);
+                    $allUsers[$key]['skill_category'] = DB::query('SELECT * FROM skill_categories WHERE user_id=' . $user['id']);
+                }
+                view('adminMapAllUsers', $allUsers);
+            } else {
+                flash('warning', 'You are not authorized to see this', 'warning');
+                header('Location:' . Config::get('app.APP_URL') . Config::get('app.APP_EXTRA_URL') . 'admin');
+            }
 	}
 }

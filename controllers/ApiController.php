@@ -15,108 +15,104 @@ class ApiController {
 
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $firstName;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $lastName;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $streetName;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $cityName;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $zipCode;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $state;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $phone;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $email;
 
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $skillCat1;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $skillCat2;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $skillCat3;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $skillCat4;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $skillCat1Rating;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $skillCat2Rating;
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	private $skillCat3Rating;
 
 	/**
-	 * @var
+	 * @var int
 	 */
 	private $skillCat4Rating;
 
 	/**
-	 * @var
+	 * @var int
 	 */
 	private $skillCat1Eval;
 	/**
-	 * @var
+	 * @var int
 	 */
 	private $skillCat2Eval;
 	/**
-	 * @var
+	 * @var int
 	 */
 	private $skillCat3Eval;
 	/**
-	 * @var
+	 * @var int
 	 */
 	private $skillCat4Eval;
 
 
-	/**
-	 * @var array
-	 */
-	private $errors = [];
 
 	/**
 	 * To get the states in json format to load them in user form
@@ -157,7 +153,7 @@ class ApiController {
 
 
 	/**
-	 * get all users to show them on admin dashboard
+	 * get all users data to show them on admin dashboard
 	 *
 	 * @return string
 	 */
@@ -174,6 +170,7 @@ class ApiController {
 
 
 	/**
+     * Get detail of a user based on `user id`
 	 * @return string
 	 */
 	public function getUser() {
@@ -189,7 +186,7 @@ class ApiController {
 	}
 
 
-	/**
+	/** Saves the form data and sends the email
 	 * @return string
 	 */
 	public function postUserForm() {
@@ -429,7 +426,6 @@ class ApiController {
 
 
 		//cat 1,2,3,4 eval
-
 		if ( $this->skillCat1Eval == '' && $this->skillCat2Eval == '' && $this->skillCat3Eval == '' && $this->skillCat4Eval == '' ) {
 			$response = $this->logError( 'Please evaluate at least one skill category' );
 
@@ -528,8 +524,18 @@ VALUES (\''
 		           'X-Mailer: PHP/' . PHP_VERSION;
 
 		try {
-			mail( $to, $this->email, $subject, $message, $headers );
+			if(!@mail( $to, $this->email, $subject, $message, $headers )){
+                $response['message'] = 'This server is not configured to send Emails or you are providing an invalid email address. Don\'t worry your data is saved with us';
+                $response['type']    = 'error';
+
+                return $this->responseJson( $response );
+            }
+
 		} catch ( Exception $exception ) {
+            $response['message'] = 'This server is not configured to send Emails or you are providing an invalid email address. Don\'t worry your data is saved with us' ;
+            $response['type']    = 'error';
+
+            return $this->responseJson( $response );
 
 		}
 
