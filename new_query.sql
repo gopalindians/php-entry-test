@@ -81,9 +81,3 @@ CREATE TABLE IF NOT EXISTS skills (
   FOREIGN KEY (skill_category_id) REFERENCES skill_categories (id),
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
-
-
-/*skill_category_1,skill_category_1_rating,
-skill_category_2,skill_category_2_rating,
-skill_category_3,skill_category_3_rating,
-skill_category_4,skill_category_4_rating,*/
