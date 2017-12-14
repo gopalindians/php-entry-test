@@ -1,4 +1,4 @@
-<?php defined( 'APP_VERSION' ) or die();
+<?php
 if ( $config['app']['DEBUG'] ) {
 	error_reporting( E_ALL );
 }

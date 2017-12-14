@@ -10,21 +10,20 @@
 */
 
 $routePaths = [
-	'' => 'HomeController@index',
-	/*'/handleUserForm' => 'HomeController@postUserForm',*/
+    '' => 'HomeController@index',
 
 
-	'/api/getStates'              => 'ApiController@getStates',
-	'/api/getCategoriesAndSkills' => 'ApiController@getCategoriesAndSkills',
-	'/api/getUsers'               => 'ApiController@getUsers',
-	'/api/user'                   => 'ApiController@getUser',
-	'/api/handleUserForm'         => 'ApiController@postUserForm',
+    '/api/getStates' => 'ApiController@getStates',
+    '/api/getCategoriesAndSkills' => 'ApiController@getCategoriesAndSkills',
+    '/api/getUsers' => 'ApiController@getUsers',
+    '/api/user' => 'ApiController@getUser',
+    '/api/handleUserForm' => 'ApiController@postUserForm',
 
 
-	'/admin'            => 'AdminController@index',
-	'/handleAdminLogin' => 'AdminController@postLogin',
-	'/admin/dashboard'  => 'AdminController@getDash',
-	'/adminLogout'      => 'AdminController@logout',
-	'/userDetail'       => 'AdminController@postUserDetail',
-	'/allUsers'         => 'AdminController@getMapAllUsers',
+    '/admin' => 'AdminController@index',
+    '/handleAdminLogin' => 'AdminController@postLogin',
+    '/admin/dashboard' => 'AdminController@getDash',
+    '/adminLogout' => 'AdminController@logout',
+    '/userDetail' => 'AdminController@postUserDetail',
+    '/allUsers' => 'AdminController@getMapAllUsers',
 ];
