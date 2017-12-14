@@ -16,93 +16,30 @@
 |
 */
 
-if (file_exists(__DIR__ . '/lib/session.php')) {
-    require_once __DIR__ . '/lib/session.php';
-} else {
-    try {
-        throw new Exception('/lib/session.php file not found');
-    } catch (Exception $exception) {
-        $error = "FILE: <span style='background: red' >" . __DIR__ . "/lib/session.php</span> Not found </br>";
-        $error .= "See <span  <span style='background: greenyellow'>" . __FILE__ . "</span></br>";
-        $error .= "Line: " . $exception->getLine() . "</br>";
-        echo $error;
-    }
+error_reporting(-1);
+ini_set('display_errors', 'On');
+
+if (file_exists(__DIR__.'/libr/session.php')) {
+    require_once __DIR__.'/libr/session.php';
 }
 
-if (file_exists(__DIR__ . '/config/config.php')) {
-    require_once __DIR__ . '/config/config.php';
-} else {
-    try {
-        throw new Exception('/config/config.php file not found');
-    } catch (Exception $exception) {
+if (file_exists(__DIR__.'/config/config.php')) {
+    require_once __DIR__.'/config/config.php';
+}
 
-        $error = "FILE: <span style='background: red' >" . __DIR__ . "/config/config.php</span> Not found </br>";
-        $error .= "See <span  <span style='background: greenyellow'>" . __FILE__ . "</span></br>";
-        $error .= "Line: " . $exception->getLine() . "</br>";
-        echo $error;
+if (file_exists(__DIR__.'/libr/helper.php')) {
+    require_once __DIR__.'/libr/helper.php';
+}
 
-    }
+if (file_exists(__DIR__.'/model/DB.php')) {
+    require_once __DIR__.'/model/DB.php';
 }
 
 
-if (file_exists(__DIR__ . '/lib/helper.php')) {
-    require_once __DIR__ . '/lib/helper.php';
-} else {
-    try {
-        throw new Exception('/lib/helper.php file not found');
-    } catch (Exception $exception) {
-
-        $error = "FILE: <span style='background: red' >" . __DIR__ . "/lib/helper.php</span> Not found </br>";
-        $error .= "See <span  <span style='background: greenyellow'>" . __FILE__ . "</span></br>";
-        $error .= "Line: " . $exception->getLine() . "</br>";
-        echo $error;
-
-    }
+if (file_exists(__DIR__.'/libr/routes.php')) {
+    require_once __DIR__.'/libr/routes.php';
 }
 
-if (file_exists(__DIR__ . '/model/DB.php')) {
-    require_once __DIR__ . '/model/DB.php';
-} else {
-    try {
-        throw new Exception('/model/DB.php file not found');
-    } catch (Exception $exception) {
-
-        $error = "FILE: <span style='background: red' >" . __DIR__ . "/model/DB.php</span> Not found </br>";
-        $error .= "See <span  <span style='background: greenyellow'>" . __FILE__ . "</span></br>";
-        $error .= "Line: " . $exception->getLine() . "</br>";
-        echo $error;
-
-    }
-}
-
-
-if (file_exists(__DIR__ . '/lib/routes.php')) {
-    require_once __DIR__ . '/lib/routes.php';
-} else {
-    try {
-        throw new Exception('/lib/routes.php file not found');
-    } catch (Exception $exception) {
-
-        $error = "FILE: <span style='background: red' >" . __DIR__ . "/model/DB.php</span> Not found </br>";
-        $error .= "See <span  <span style='background: greenyellow'>" . __FILE__ . "</span></br>";
-        $error .= "Line: " . $exception->getLine() . "</br>";
-        echo $error;
-
-    }
-}
-
-
-if (file_exists(__DIR__ . '/lib/router_handler.php')) {
-    require_once __DIR__ . '/lib/router_handler.php';
-} else {
-    try {
-        throw new Exception('/lib/router_handler.php file not found');
-    } catch (Exception $exception) {
-
-        $error = "FILE: <span style='background: red' >" . __DIR__ . "/lib/router_handler.php</span> Not found </br>";
-        $error .= "See <span  <span style='background: greenyellow'>" . __FILE__ . "</span></br>";
-        $error .= "Line: " . $exception->getLine() . "</br>";
-        echo $error;
-
-    }
+if (file_exists(__DIR__.'/libr/router_handler.php')) {
+    require_once __DIR__.'/libr/router_handler.php';
 }
