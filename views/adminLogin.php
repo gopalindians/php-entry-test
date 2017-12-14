@@ -1,4 +1,4 @@
-<?php defined( 'APP_VERSION' ) or die(); ?>
+
 <div class="row justify-content-md-center">
     <div class="col-md-6">
 

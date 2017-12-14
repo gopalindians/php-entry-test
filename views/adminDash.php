@@ -1,4 +1,4 @@
-<?php defined( 'APP_VERSION' ) or die(); ?>
+
 <div>
 
     <div class="row justify-content-md-center" style="display: none" id="user-table">

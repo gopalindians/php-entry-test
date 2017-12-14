@@ -1,4 +1,4 @@
-<?php defined( 'APP_VERSION' ) or die(); ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no,user-scalable=no">
     <meta name="app-url" content="<?= Config::get( 'app.APP_URL' ) . Config::get( 'app.APP_EXTRA_URL' ) ?>">
     <meta name="current-route" content="<?= Config::getCurrentRoute() ?>">
+
+
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
@@ -56,7 +58,7 @@
 
     <!--For Fun-->
     <script>
-        console.log('%c You are awesome | आप अच्छे हैं! ', 'font-size:30px; background: #222; color: #bada55');
+        console.log('%c You are awesome | आप अच्छे हैं! ', 'font-size:18px; background: #222; color: #bada55');
         console.log('%c If you are here you probably love web, head over to http://github.com/gopalindians to collaborate with me', 'font-size:12px; background: #222; color: #bada55');
     </script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -96,7 +98,7 @@
     </nav>
 
     <div style="padding: 15px;">
-		<?= $content ?? '' ?>
+		<?= isset($content)?$content : '' ?>
     </div>
 </div>
 

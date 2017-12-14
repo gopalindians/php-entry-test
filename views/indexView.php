@@ -1,4 +1,4 @@
-<?php defined( 'APP_VERSION' ) or die(); ?>
+
 <div class="row justify-content-md-center">
     <div class="col-md-6">
         <div class="alert alert-warning alert-dismissible fade show" id="error-div" style="display: none;" role="alert">

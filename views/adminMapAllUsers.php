@@ -1,4 +1,4 @@
-<?php defined( 'APP_VERSION' ) or die(); ?>
+
 <style>
     #legend {
         font-family: Arial, sans-serif;
@@ -46,7 +46,7 @@
                     if (val.status == "OVER_QUERY_LIMIT") {
                         alert('Google geo coding Api limit exceeded for the day')
                     } else if (val.status == "ZERO_RESULTS") {
-                        alert('This users location is not available, default sets to Chandigarh');
+                        console.debug('One of the users location is not available');
                     } else if (val.status == "OK") {
 
                         value.skills.forEach(function (value2, index2) {
