@@ -516,7 +516,7 @@ VALUES (\''
 
 		$to      = $this->email;
 		$subject = 'Submitted: Thanks for filling the form';
-		$message = "Hello $this->firstName, your information is saved successfully, Thanks //:" . Config::get( 'app.APP_URL' ) . Config::get( 'app.APP_EXTRA_URL' );
+		$message = "Hello $this->firstName, your information is saved successfully";
 		$headers = 'From: gopalindians@gmail.com' . "\r\n" .
 		           'Reply-To: gopalindians@gmail.com' . "\r\n" .
 		           'Content-type: text/html; charset=utf-8' . "\r\n" .
@@ -524,7 +524,7 @@ VALUES (\''
 		           'X-Mailer: PHP/' . PHP_VERSION;
 
 		try {
-			if(!@mail( $to, $this->email, $subject, $message, $headers )){
+			if(!@mail( $to, $subject, $message, $headers )){
                 $response['message'] = 'This server is not configured to send Emails or you are providing an invalid email address. Don\'t worry your data is saved with us';
                 $response['type']    = 'error';
 
