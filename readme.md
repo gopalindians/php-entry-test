@@ -4,6 +4,6 @@
 - `config`        
 - `controllers`   
 - `data`          
-- `lib`           
+- `libr`           
 - `model`         
 - `views`       
